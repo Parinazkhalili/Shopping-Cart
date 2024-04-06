@@ -4,15 +4,17 @@ import Card from "../components/Card";
 import Loader from "../components/Loader";
 import { useProducts } from "../context/ProductContext" ;
 import Styles from "./ProductsPage.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaListUl } from "react-icons/fa";
 
 function ProductsPage() {
 
   const products = useProducts();
   console.log(products)
+  const [displayed , setDisplayed] = useState([])
+  const [search, setSearch] = useState('');
 
-  const [search, setSearch] = useState('')
+  useEffect(() => {setDisplayed(products)},[products] );
   
   const searchHandler = () => {
     console.log('search')
@@ -35,8 +37,8 @@ function ProductsPage() {
    <div className={Styles.container}>
     <div className={Styles.products}>
 
-      {!products.length && <Loader />}
-      {products.map ((p) =>( <Card  key={p.id} data={p} />))}
+      {!displayed.length && <Loader />}
+      {displayed.map ((p) =>( <Card  key={p.id} data={p} />))}
     </div>
 
     <div>
