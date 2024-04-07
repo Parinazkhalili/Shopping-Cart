@@ -51,7 +51,7 @@ function ProductsPage() {
       {!displayed.length && <Loader />}
       {displayed.map ((p) =>( <Card  key={p.id} data={p} />))}
     </div>
-       <Sidebar  setQuery ={setQuery}/>
+       <Sidebar  query={query}  setQuery ={setQuery}/>
     </div>
    </>
   )
