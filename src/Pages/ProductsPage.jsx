@@ -1,13 +1,16 @@
 
-import { ImSearch } from "react-icons/im";
+
 import Card from "../components/Card";
 import Loader from "../components/Loader";
 import { useProducts } from "../context/ProductContext" ;
 import Styles from "./ProductsPage.module.css"
 import { useEffect, useState } from "react";
-import { FaListUl } from "react-icons/fa";
-import { createQueryObject, filterProducts, getInitialQuery, searchProducts } from "../helper/helper";
+
+import {  filterProducts, getInitialQuery, searchProducts } from "../helper/helper";
 import { useSearchParams } from "react-router-dom";
+import SearchBox from "../components/SearchBox";
+import Sidebar from "../components/Sidebar";
+
 
 function ProductsPage() {
 
@@ -35,45 +38,21 @@ function ProductsPage() {
    setDisplayed(finalProducts);
   },[query])  
   
-  const searchHandler = () => {
-    setQuery(query => createQueryObject(query, {search: search}))
-  }
 
-  const categoryHandler = (event) => {
-   const {tagName} = event.target;
 
-   const category = event.target.innerText.toLowerCase();
-    if (tagName!== "LI") return ;
-    setQuery((query) => createQueryObject(query, {category: category}))
-  }
+
   return (
     <>
 
-    <div>
-      <input type="text"  placeholder="Search..."  value={search} onChange ={ e => setSearch(e.target.value.toLowerCase().trim())}/>
-      <button  onClick={searchHandler}><ImSearch /></button>
-    </div>
+    <SearchBox  search={search} setSearch={setSearch} setQuery={setQuery}/>
    <div className={Styles.container}>
     <div className={Styles.products}>
 
       {!displayed.length && <Loader />}
       {displayed.map ((p) =>( <Card  key={p.id} data={p} />))}
     </div>
-
-    <div>
-      <div>
-      <FaListUl />
-      <p>Categories</p>
-      </div>
-      <ul  onClick={categoryHandler}>
-        <li>All</li>
-        <li>Electronics</li>
-        <li>Jewelery</li>
-        <li>Men's Clothing</li>
-        <li>Women's Clothing</li>
-      </ul>
-      </div>
-   </div>
+       <Sidebar  setQuery ={setQuery}/>
+    </div>
    </>
   )
 }
