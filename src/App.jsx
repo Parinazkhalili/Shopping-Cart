@@ -5,14 +5,16 @@ import CheckoutPage from "./Pages/CheckoutPage"
 import PageNoteFound from "./Pages/404"
 import ProductsProvider from "./context/ProductContext"
 import CartProvider from "./context/CartContext"
+import Layout from "./layout/Layout"
 
 function App() {
 
 
   return (
-
-    <CartProvider>
+ 
+  <CartProvider>
   < ProductsProvider>
+  <Layout>
   <Routes>
     <Route  path="/"  element={<Navigate to="/products"  replace/>}/>
     <Route  path="/products"  element={<ProductsPage />}/>
@@ -20,8 +22,10 @@ function App() {
     <Route  path="/checkout"  element={<CheckoutPage />}/>
     <Route  path="/*"  element={<PageNoteFound/>}/>
   </Routes>
+  </Layout>
   </ProductsProvider>
   </CartProvider>
+ 
   )
 }
 
